@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignaFlow Systems | Enterprise Compliance Infrastructure</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        :root {
+            --bg-main: #ffffff;
+            --bg-neutral: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #e2e8f0;
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-neutral: #111827;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #1f2937;
+            --primary: #38bdf8;
+            --primary-hover: #7dd3fc;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.2s, color 0.2s;
+            overflow-x: hidden;
+        }
+
+        /* --- High-End Scroll Reveal Core System --- */
+        .scroll-trigger {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .scroll-trigger.animate-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        header {
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-left: 24px;
+            font-weight: 500;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 160px auto 60px auto;
+            padding: 0 24px;
+        }
+
+        /* Large viewport section blocks to allow for true scrolling headroom */
+        .section-block {
+            min-height: 75vh;
+            padding: 60px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-section {
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 680px;
+            margin: 0 auto 32px auto;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .card {
+            background-color: var(--bg-neutral);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 36px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 12px;
+        }
+
+        .checkbox-group input {
+            margin-top: 4px;
+            margin-right: 12px;
+        }
+
+        .checkbox-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .review-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            background-color: var(--bg-main);
+        }
+
+        .review-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        #cookieBanner {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            max-width: 600px;
+            background-color: var(--bg-neutral);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        footer {
+            background-color: var(--bg-neutral);
+            border-top: 1px solid var(--border-color);
+            padding: 48px 24px;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .business-details {
+            border-top: 1px solid var(--border-color);
+            max-width: 1200px;
+            margin: 32px auto 0 auto;
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a href="#" class="logo">SignaFlow Systems</a>
+        <nav>
+            <a href="#onboarding">Provisioning</a>
+            <a href="#reviews">Audits</a>
+            <button id="themeToggle" class="btn" style="padding: 6px 12px; font-size: 0.85rem; margin-left:24px;">Theme</button>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- Section 1: Hero Entry with kinetic scroll targeting hooks -->
+    <section class="section-block hero-section scroll-trigger">
+        <h1>Secure Enterprise Compliance & Document Routing</h1>
+        <p>Architected for legal operations. Deploy ironclad data infrastructure built strictly around global regulatory compliance protocols.</p>
+        <a href="#onboarding" class="btn" style="text-decoration:none;">Initialize Integration</a>
+    </section>
+
+    <!-- Section 2: Form Deployment Blocks Container -->
+    <section class="section-block scroll-trigger" id="onboarding">
+        <div class="grid-layout">
+            <div class="main-content">
+                <div class="card">
+                    <h2 style="margin-bottom: 16px;">Platform Provisioning Access</h2>
+                    <form id="onboardingForm">
+                        <div class="form-group">
+                            <label for="companyName">Registered Corporate Title</label>
+                            <input type="text" id="companyName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="corporateEmail">Authorized Professional Email Address</label>
+                            <input type="email" id="corporateEmail" required>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="consentLegal" required>
+                            <label for="consentLegal" class="checkbox-label">I verify that all operations are managed by individuals over the age of 16, and confirm data processing terms.</label>
+                        </div>
+                        <div class="checkbox-group" style="margin-bottom: 24px;">
+                            <input type="checkbox" id="consentMarketing">
+                            <label for="consentMarketing" class="checkbox-label">Optional: Receive architectural updates. Includes an unsubscribe link in every message.</label>
+                        </div>
+                        <button type="submit" class="btn">Deploy Secure Instance</button>
+                    </form>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="card">
+                    <h3 style="margin-bottom: 12px;">GDPR / CCPA Portal</h3>
+                    <form id="deletionForm">
+                        <div class="form-group">
+                            <label for="deleteEmail">Target Email</label>
+                            <input type="email" id="deleteEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="requestType">Action</label>
+                            <select id="requestType">
+                                <option value="deletion">Execute Data Deletion</option>
+                                <option value="audit">Request Data Audit</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Submit Request</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Section 3: Professional Audit Verification Feed Layer -->
+    <section class="section-block scroll-trigger" id="reviews">
+        <h2 style="margin-bottom: 8px;">Third-Party Security Certifications</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">All architectural claims and operations are audited annually by external certifiers.</p>
+        <div class="review-grid">
+            <div class="review-card">
+                <p style="font-style: italic;">"SignaFlow's handling of multi-tenant enterprise data partitioning passed our compliance check matrix with zero tracking irregularities."</p>
+                <div class="review-meta">Lead Infrastructure Auditor, Apex Security Labs</div>
+            </div>
+            <div class="review-card">
+                <p style="font-style: italic;">"The integration of localized data deletion requests maps precisely to enterprise-grade compliance specifications."</p>
+                <div class="review-meta">Director of Legal Infrastructure, Global Logistics Corp</div>
+            </div>
+        </div>
+    </section>
+</main>
+<div id="cookieBanner" role="dialog">
+    <h3>Cookie Consent & Policy Optimization</h3>
+    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+        We process tracking identifiers solely to handle security contexts. We execute no unnecessary tracking patterns.
+    </p>
+    <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="btn" id="acceptCookies" style="padding: 8px 16px; font-size: 0.875rem;">Accept Track</button>
+        <button class="btn" id="declineCookies" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-size: 0.875rem;">Decline</button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>Legal Infrastructure</h4>
+            <ul>
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#refund">Refund Policy</a></li>
+                <li><a href="#cookies">Cookie Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>System Assets</h4>
+            <ul>
+                <li><a href="#licensing">Image & Font Licenses</a></li>
+                <li><a href="#accessibility">Accessibility Framework</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="business-details">
+        <div><strong>Corporate Registry:</strong> SignaFlow Systems Inc., Suite 400, Financial District, New Delhi, India</div>
+        <div>&copy; 2026 SignaFlow Systems. All rights reserved.</div>
+    </div>
+</footer>
+
+<script>
+    // --- Javascript Intersection Observer Scroll Engine ---
+    const observerOptions = {
+        root: null,
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px"
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+
+    // Initial pass tracking all compliance layout content blocks
+    document.querySelectorAll('.scroll-trigger').forEach(target => {
+        scrollObserver.observe(target);
+    });
+
+    // Theme Toggle and Cookie Management logic blocks
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const doc = document.documentElement;
+        doc.setAttribute('data-theme', doc.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (!localStorage.getItem('cookiePref')) document.getElementById('cookieBanner').style.display = 'block';
+    });
+    document.getElementById('acceptCookies').addEventListener('click', () => {
+        localStorage.setItem('cookiePref', 'yes');
+        document.getElementById('cookieBanner').style.display = 'none';
+    });
+    document.getElementById('declineCookies').addEventListener('click', () => {
+        localStorage.setItem('cookiePref', 'no');
+        document.getElementById('cookieBanner').style.display = 'none';
+    });
+</script>
+</body>
+</html>
